@@ -1,6 +1,7 @@
 package com.shakiv.husain.exerciseappui
 
 import android.os.Bundle
+import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -22,7 +24,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -61,25 +65,45 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun MyApp() {
-    SearchBar()
-
+    HomeScreen()
 }
 
-@Preview(showBackground = true)
+@Preview(showBackground = true,backgroundColor = 0xFFF0EAE2, heightDp = 180)
 @Composable
 fun MyAppReview() {
-    SearchBar()
+    HomeScreen()
 }
 
 
 @Preview(showBackground = true)
 @Composable
-fun HomeSectionPreview() {
-
-    HomeSection(R.string.ab1_inversions, content = {
-        AlignYourBodyRow(modifier = Modifier, alignYourBodyData)
-    })
+fun HomeScreenPreview(){
+    HomeScreen()
 }
+
+@Composable
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Column(
+        modifier = modifier
+            .verticalScroll(rememberScrollState())
+            .padding(vertical = 16.dp)
+
+    ) {
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchBar(Modifier.padding(horizontal = 16.dp))
+        HomeSection(title = R.string.align_your_body) {
+            AlignYourBodyRow(alignYourBodyData = alignYourBodyData)
+        }
+
+        HomeSection(title = R.string.favorite_collections) {
+            FavoriteCollectionGrid()
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+    }
+}
+
+
+
 
 @Composable
 fun HomeSection(
@@ -92,7 +116,8 @@ fun HomeSection(
         Text(
             stringResource(title).uppercase(Locale.getDefault()),
             style = MaterialTheme.typography.titleMedium,
-            modifier = Modifier.paddingFromBaseline(top = 40.dp, bottom = 8.dp)
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 8.dp)
                 .padding(horizontal = 16.dp)
         )
         content()
