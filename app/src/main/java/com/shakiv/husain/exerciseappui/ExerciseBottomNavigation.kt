@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Preview
 @Composable
-private fun ExerciseBottomNavigation(modifier: Modifier = Modifier) {
+ fun ExerciseBottomNavigation(modifier: Modifier = Modifier) {
     BottomNavigation(
         modifier,
         backgroundColor = MaterialTheme.colors.background
